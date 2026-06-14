@@ -26,8 +26,8 @@
   --border-focus: #df208c;
   
   /* Fonts */
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Roboto', "Helvetica Neue", sans-serif;
+  --font-body: 'Roboto', "Helvetica Neue", sans-serif;
   
   /* Layout */
   --max-width: 1200px;
