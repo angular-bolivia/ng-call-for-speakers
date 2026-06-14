@@ -1,0 +1,19 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Check if the user is authenticated as an administrator
+    function isAdmin() {
+      return request.auth != null;
+    }
+    
+    match /speaker-photos/{photoName} {
+      // Anyone can upload a photo if it is less than 2MB and is an image type
+      allow write: if request.resource.size < 2 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+                   
+      // Only authenticated administrators can read or delete uploaded speaker photos
+      allow read, delete: if isAdmin();
+    }
+  }
+}

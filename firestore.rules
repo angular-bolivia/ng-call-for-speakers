@@ -1,0 +1,110 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: applicants
+// Document ID: auto-generated (UUID)
+// Fields:
+//   - fullName: string (required, 3-100 chars) - Full name of the candidate
+//   - email: string (required, valid email pattern) - Contact email
+//   - phone: string (required, 8-20 chars) - Phone number
+//   - countryOfOrigin: string (required) - Country of origin
+//   - countryOfResidence: string (required) - Country of residence
+//   - bio: string (required, 30-1000 chars) - About the speaker
+//   - photoUrl: string (required, valid URL) - Public url of profile photo
+//   - photoStoragePath: string (required) - Storage path reference
+//   - talkTitle: string (required, 10-150 chars) - Title of the proposed talk
+//   - talkDescription: string (required, 50-2000 chars) - Description of the talk
+//   - duration: number (required, must be 15, 30, or 60) - Duration in minutes
+//   - type: string (required, 'talk' | 'workshop') - Presentation type
+//   - level: string (required, 'beginner' | 'intermediate' | 'advanced') - Talk level
+//   - acceptedTerms: bool (required, must be true) - Terms agreement check
+//   - status: string (required, 'pending' | 'reviewing' | 'accepted' | 'waitlist' | 'rejected') - Admin review status
+//   - adminNotes: string (optional, up to 1000 chars) - Private organizational notes
+//   - createdAt: timestamp (required) - Server timestamp when created
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Check if the user is an authenticated administrator
+    function isAdmin() {
+      return request.auth != null;
+    }
+    
+    // Validate email pattern
+    function isValidEmail(email) {
+      return email is string && 
+             email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+    
+    // Validate URL format
+    function isValidUrl(url) {
+      return url is string && 
+             (url.matches("^https://.*") || url.matches("^http://.*"));
+    }
+    
+    // Validate optional string field
+    function isValidOptionalString(field, minLen, maxLen) {
+      return !(field in request.resource.data) || 
+             (request.resource.data[field] is string && 
+              request.resource.data[field].size() <= maxLen);
+    }
+    
+    // Domain validator for creating a new applicant submission
+    function isValidApplicantOnCreate(data) {
+      return data.keys().hasAll([
+        'fullName', 'email', 'phone', 'countryOfOrigin', 'countryOfResidence', 
+        'bio', 'photoUrl', 'photoStoragePath', 'talkTitle', 'talkDescription', 
+        'duration', 'type', 'level', 'acceptedTerms', 'status', 'createdAt'
+      ]) &&
+      data.fullName is string && data.fullName.size() >= 3 && data.fullName.size() <= 100 &&
+      isValidEmail(data.email) &&
+      data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
+      data.countryOfOrigin is string && data.countryOfOrigin.size() > 0 &&
+      data.countryOfResidence is string && data.countryOfResidence.size() > 0 &&
+      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 1000 &&
+      isValidUrl(data.photoUrl) &&
+      data.photoStoragePath is string &&
+      data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
+      data.talkDescription is string && data.talkDescription.size() >= 50 && data.talkDescription.size() <= 2000 &&
+      data.duration in [15, 30, 60] &&
+      data.type in ['talk', 'workshop'] &&
+      data.level in ['beginner', 'intermediate', 'advanced'] &&
+      data.acceptedTerms == true &&
+      data.status == 'pending' &&
+      data.createdAt is timestamp;
+    }
+    
+    // Domain validator for updating an applicant submission (Admins only)
+    function isValidApplicantOnUpdate(data) {
+      return data.fullName is string && data.fullName.size() >= 3 && data.fullName.size() <= 100 &&
+      isValidEmail(data.email) &&
+      data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
+      data.countryOfOrigin is string && data.countryOfOrigin.size() > 0 &&
+      data.countryOfResidence is string && data.countryOfResidence.size() > 0 &&
+      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 1000 &&
+      isValidUrl(data.photoUrl) &&
+      data.photoStoragePath is string &&
+      data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
+      data.talkDescription is string && data.talkDescription.size() >= 50 && data.talkDescription.size() <= 2000 &&
+      data.duration in [15, 30, 60] &&
+      data.type in ['talk', 'workshop'] &&
+      data.level in ['beginner', 'intermediate', 'advanced'] &&
+      data.status in ['pending', 'reviewing', 'accepted', 'waitlist', 'rejected'] &&
+      isValidOptionalString('adminNotes', 0, 1000);
+    }
+
+    match /applicants/{applicantId} {
+      // Anyone can apply (write new applicant) as long as it matches validation rules
+      allow create: if isValidApplicantOnCreate(request.resource.data);
+      
+      // Only administrators can read, update, or delete applications
+      allow read, delete: if isAdmin();
+      allow update: if isAdmin() && isValidApplicantOnUpdate(request.resource.data);
+    }
+  }
+}
