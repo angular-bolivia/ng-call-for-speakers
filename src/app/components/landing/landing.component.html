@@ -1,1 +1,128 @@
-<p>landing works!</p>
+<div class="landing-wrapper animate-fade-in">
+  <!-- Navigation Header -->
+  <header class="nav-header">
+    <div class="logo-container">
+      <svg class="angular-logo" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M125 30 L219 63 L204 186 L125 230 L46 186 L31 63 Z" fill="#b80025"/>
+        <path d="M125 30 L125 230 L204 186 L219 63 Z" fill="#dd0031"/>
+        <path d="M125 55 L65 175 L90 175 L102 145 L148 145 L160 175 L185 175 Z" fill="#ffffff"/>
+        <path d="M125 55 L125 120 L144 120 L136 100 Z" fill="#e0e0e0"/>
+        <path d="M125 55 L125 120 L106 120 L114 100 Z" fill="#ffffff"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-brand">Angular</span>
+        <span class="logo-country">Bolivia</span>
+      </div>
+    </div>
+    <a routerLink="/admin/login" class="btn-admin-access">Acceso Organizadores</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1 class="hero-title">Comparte tu pasión por Angular con la comunidad</h1>
+      <p class="hero-subtitle">Buscamos speakers para nuestros próximos meetups. ¡Anímate a disertar charlas dinámicas, conducir debates y expandir el conocimiento de nuestra comunidad!</p>
+      <div class="hero-cta-container">
+        <a routerLink="/apply" class="btn-primary-lg">Postular como Speaker</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section container">
+    <div class="card-glass">
+      <h2 class="section-title">¿Qué es Angular Bolivia?</h2>
+      <p class="info-text">
+        Nuestros meetups son espacios de intercambio y aprendizaje, en los que abordamos temas relacionados con la industria del desarrollo de software: desde el desarrollo con Angular y herramientas de software, hasta diseño UX/UI y programación en general.
+      </p>
+      <p class="info-text">
+        Buscamos speakers que puedan disertar charlas dinámicas, conducir debates enriquecedores y ofrecer a nuestros asistentes, la oportunidad para expandir sus conocimientos.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topics Section -->
+  <section class="topics-section container">
+    <h2 class="section-subtitle">Temas que abordamos</h2>
+    <p class="section-desc">Cualquier tema que aporte valor a la comunidad tecnológica es bienvenido. Aquí hay algunas sugerencias:</p>
+    <div class="topics-grid">
+      <div class="topic-chip">
+        <span class="topic-icon">🅰️</span>
+        <span>Angular & Desarrollo Web</span>
+      </div>
+      <div class="topic-chip">
+        <span class="topic-icon">🛠️</span>
+        <span>Herramientas para desarrolladores</span>
+      </div>
+      <div class="topic-chip">
+        <span class="topic-icon">🎨</span>
+        <span>Diseño UX/UI</span>
+      </div>
+      <div class="topic-chip">
+        <span class="topic-icon">💻</span>
+        <span>Programación en general</span>
+      </div>
+      <div class="topic-chip">
+        <span class="topic-icon">🤖</span>
+        <span>IA aplicada a Web</span>
+      </div>
+      <div class="topic-chip">
+        <span class="topic-icon">🧠</span>
+        <span>Inteligencia Artificial</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section container">
+    <h2 class="section-subtitle">¿Por qué ser Speaker en Angular Bolivia?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon-wrapper">🚀</div>
+        <h3>Visibilidad</h3>
+        <p>Posiciona tu marca personal en la comunidad de desarrollo de software y comparte tu experiencia con cientos de profesionales en Bolivia y Latinoamérica.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon-wrapper">🤝</div>
+        <h3>Networking</h3>
+        <p>Conéctate directamente con desarrolladores, diseñadores, expertos técnicos y líderes de la industria tecnológica.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon-wrapper">📹</div>
+        <h3>Charla Grabada</h3>
+        <p>Nuestros meetups se transmiten en redes sociales y quedan grabados de forma permanente en nuestro canal de YouTube para que los uses en tu portafolio.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon-wrapper">🎓</div>
+        <h3>Mentoría Gratis</h3>
+        <p>¿Es tu primera charla? Organizadores experimentados de la comunidad te ayudarán a estructurar, ensayar y perfeccionar tu presentación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirements & Rules Section -->
+  <section class="requirements-section container">
+    <div class="card-glass requirements-card">
+      <h2 class="section-title">Lo que esperamos de ti</h2>
+      <ul class="requirements-list">
+        <li>
+          <div class="req-title">⏰ Disponibilidad de tiempo el día y hora del evento</div>
+          <div class="req-desc">En caso seleccionemos tu charla, nos contactaremos contigo con anticipación para saber si tienes disponibilidad para participar de nuestro próximo meetup.</div>
+        </li>
+        <li>
+          <div class="req-title">💡 Ganas de compartir tu conocimiento</div>
+          <div class="req-desc">Queremos que te diviertas compartiendo con los asistentes y pases un buen rato impulsando el crecimiento de la comunidad de tecnología.</div>
+        </li>
+      </ul>
+      <div class="final-cta-container">
+        <a routerLink="/apply" class="btn-primary-lg">Comenzar mi Postulación</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>&copy; 2026 Angular Bolivia. Hecho con 🅰️ por y para la comunidad.</p>
+  </footer>
+</div>
