@@ -1,4 +1,9 @@
 .login-wrapper {
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-glow: rgba(112, 40, 228, 0.15);
+  --border-focus: var(--accent);
+
   min-height: 100vh;
   display: flex;
   align-items: center;

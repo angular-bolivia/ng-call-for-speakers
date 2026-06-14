@@ -2,26 +2,33 @@
   <!-- Navigation Header -->
   <header class="nav-header">
     <div class="logo-container">
-      <svg class="angular-logo" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
-        <path d="M125 30 L219 63 L204 186 L125 230 L46 186 L31 63 Z" fill="#b80025"/>
-        <path d="M125 30 L125 230 L204 186 L219 63 Z" fill="#dd0031"/>
-        <path d="M125 55 L65 175 L90 175 L102 145 L148 145 L160 175 L185 175 Z" fill="#ffffff"/>
-        <path d="M125 55 L125 120 L144 120 L136 100 Z" fill="#e0e0e0"/>
-        <path d="M125 55 L125 120 L106 120 L114 100 Z" fill="#ffffff"/>
-      </svg>
+      <img src="/ng-logo.svg" alt="Angular Logo" class="angular-logo">
       <div class="logo-text">
         <span class="logo-brand">Angular</span>
         <span class="logo-country">Bolivia</span>
       </div>
     </div>
-    <a routerLink="/admin/login" class="btn-admin-access">Acceso Organizadores</a>
+    <div class="social-links">
+      <a href="https://www.instagram.com/angularbolivia/" target="_blank" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      </a>
+      <a href="https://www.facebook.com/angularBolivia/" target="_blank" aria-label="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/angular-bolivia/posts/?feedView=all" target="_blank" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="mailto:angularbolivia@gmail.com" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </a>
+    </div>
   </header>
 
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content container">
-      <h1 class="hero-title">Comparte tu pasión por Angular con la comunidad</h1>
+      <h1 class="hero-title">{{ typedText() }}<span class="cursor">|</span></h1>
       <p class="hero-subtitle">Buscamos speakers para nuestros próximos meetups. ¡Anímate a disertar charlas dinámicas, conducir debates y expandir el conocimiento de nuestra comunidad!</p>
       <div class="hero-cta-container">
         <a routerLink="/apply" class="btn-primary-lg">Postular como Speaker</a>
@@ -31,14 +38,17 @@
 
   <!-- Info Section -->
   <section class="info-section container">
-    <div class="card-glass">
+    <div class="card-glass info-card">
       <h2 class="section-title">¿Qué es Angular Bolivia?</h2>
       <p class="info-text">
-        Nuestros meetups son espacios de intercambio y aprendizaje, en los que abordamos temas relacionados con la industria del desarrollo de software: desde el desarrollo con Angular y herramientas de software, hasta diseño UX/UI y programación en general.
+        Localizados en Cochabamba, somos un grupo de desarrolladores entusiastas por la tecnología y los eventos. Compartimos contenido relacionado con Angular y el desarrollo de software. Organizamos eventos para aprender y conocernos entre nosotros.
       </p>
       <p class="info-text">
         Buscamos speakers que puedan disertar charlas dinámicas, conducir debates enriquecedores y ofrecer a nuestros asistentes, la oportunidad para expandir sus conocimientos.
       </p>
+      <div style="margin-top: 2rem; display: flex; justify-content: center;">
+        <a href="https://ng.com.bo" target="_blank" class="btn-secondary">Saber más sobre la comunidad</a>
+      </div>
     </div>
   </section>
 
@@ -79,27 +89,54 @@
     <h2 class="section-subtitle">¿Por qué ser Speaker en Angular Bolivia?</h2>
     <div class="benefits-grid">
       <div class="benefit-card">
-        <div class="benefit-icon-wrapper">🚀</div>
+        <div class="benefit-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="benefit-icon"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+        </div>
         <h3>Visibilidad</h3>
         <p>Posiciona tu marca personal en la comunidad de desarrollo de software y comparte tu experiencia con cientos de profesionales en Bolivia y Latinoamérica.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon-wrapper">🤝</div>
+        <div class="benefit-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="benefit-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
         <h3>Networking</h3>
         <p>Conéctate directamente con desarrolladores, diseñadores, expertos técnicos y líderes de la industria tecnológica.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon-wrapper">📹</div>
+        <div class="benefit-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="benefit-icon"><rect width="20" height="14" x="2" y="5" rx="2"></rect><polygon points="10 9 15 12 10 15 10 9"></polygon></svg>
+        </div>
         <h3>Charla Grabada</h3>
         <p>Nuestros meetups se transmiten en redes sociales y quedan grabados de forma permanente en nuestro canal de YouTube para que los uses en tu portafolio.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon-wrapper">🎓</div>
+        <div class="benefit-icon-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="benefit-icon"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+        </div>
         <h3>Mentoría Gratis</h3>
         <p>¿Es tu primera charla? Organizadores experimentados de la comunidad te ayudarán a estructurar, ensayar y perfeccionar tu presentación.</p>
       </div>
     </div>
   </section>
+
+  <!-- Past Meetups Section (Hidden for now) -->
+  <!--
+  <section class="meetups-section container">
+    <h2 class="section-title" style="text-align: center;">Algunos de nuestros meetups</h2>
+    <p class="section-desc" style="text-align: center; margin-bottom: 3rem;">Echa un vistazo a las presentaciones de nuestros speakers y el contenido que creamos en comunidad.</p>
+    <div class="meetups-grid">
+      <div class="video-card card-glass">
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/yEDCyPyv12Q?si=IT51yBz5oWWyz0vp&start=1889" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: var(--radius-md);"></iframe>
+      </div>
+      <div class="video-card card-glass">
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/7mJPwvGy7X0?si=iOlIRy8zMr8mdQzQ&start=2095" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: var(--radius-md);"></iframe>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://www.youtube.com/@AngularBolivia" target="_blank" class="btn-secondary">Ver más en YouTube</a>
+    </div>
+  </section>
+  -->
 
   <!-- Requirements & Rules Section -->
   <section class="requirements-section container">
@@ -123,6 +160,6 @@
 
   <!-- Footer -->
   <footer class="landing-footer">
-    <p>&copy; 2026 Angular Bolivia. Hecho con 🅰️ por y para la comunidad.</p>
+    <p>&copy; 2026 Angular Bolivia 🇧🇴. Hecho con ❤️ por y para la comunidad.</p>
   </footer>
 </div>

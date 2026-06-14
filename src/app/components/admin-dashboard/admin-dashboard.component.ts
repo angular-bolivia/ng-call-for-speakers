@@ -25,7 +25,7 @@ interface Applicant {
   github?: string;
   website?: string;
   repository?: string;
-  status: 'pending' | 'accepted' | 'waitlist' | 'rejected';
+  status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived';
   notes?: string;
   createdAt: any;
 }
@@ -54,6 +54,8 @@ export class AdminDashboardComponent implements OnInit {
     
     if (this.filterStatus() !== 'all') {
       filtered = filtered.filter(a => a.status === this.filterStatus());
+    } else {
+      filtered = filtered.filter(a => a.status !== 'archived');
     }
     
     const sq = this.searchQuery().toLowerCase();
@@ -102,7 +104,7 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedApplicant.set(null);
   }
 
-  public async updateStatus(status: 'pending' | 'accepted' | 'waitlist' | 'rejected') {
+  public async updateStatus(status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived') {
     const applicant = this.selectedApplicant();
     if (!applicant) return;
 
@@ -127,6 +129,14 @@ export class AdminDashboardComponent implements OnInit {
       console.error('Error updating notes', error);
       alert('Error updating notes');
     }
+  }
+
+  public getApplicantDate(app: any): Date | null {
+    if (!app || !app.createdAt) return null;
+    if (typeof app.createdAt.toDate === 'function') {
+      return app.createdAt.toDate();
+    }
+    return new Date(app.createdAt);
   }
 
   public async logout() {

@@ -9,11 +9,7 @@
     </a>
     
     <div class="logo-container">
-      <svg class="angular-logo" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
-        <path d="M125 30 L219 63 L204 186 L125 230 L46 186 L31 63 Z" fill="#b80025"/>
-        <path d="M125 30 L125 230 L204 186 L219 63 Z" fill="#dd0031"/>
-        <path d="M125 55 L65 175 L90 175 L102 145 L148 145 L160 175 L185 175 Z" fill="#ffffff"/>
-      </svg>
+      <img src="/ng-logo.svg" alt="Angular Logo" class="angular-logo">
       <div class="logo-text">
         <span class="logo-brand">Angular</span>
         <span class="logo-country">Bolivia</span>
@@ -235,24 +231,45 @@
               <div class="form-group">
                 <label>Duración estimada</label>
                 <div class="duration-cards-grid">
-                  <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 15">
-                    <input type="radio" formControlName="duration" [value]="15" class="radio-hidden">
-                    <span class="dur-value">15</span>
-                    <span class="dur-unit">Minutos</span>
-                    <span class="dur-desc">Lightning Talk</span>
-                  </label>
-                  <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 30">
-                    <input type="radio" formControlName="duration" [value]="30" class="radio-hidden">
-                    <span class="dur-value">30</span>
-                    <span class="dur-unit">Minutos</span>
-                    <span class="dur-desc">Charla Completa</span>
-                  </label>
-                  <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 60">
-                    <input type="radio" formControlName="duration" [value]="60" class="radio-hidden">
-                    <span class="dur-value">60</span>
-                    <span class="dur-unit">Minutos</span>
-                    <span class="dur-desc">Taller / Sesión larga</span>
-                  </label>
+                  @if (speakerForm.get('type')?.value === 'talk') {
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 15">
+                      <input type="radio" formControlName="duration" [value]="15" class="radio-hidden">
+                      <span class="dur-value">15</span>
+                      <span class="dur-unit">Minutos</span>
+                      <span class="dur-desc">Lightning Talk</span>
+                    </label>
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 30">
+                      <input type="radio" formControlName="duration" [value]="30" class="radio-hidden">
+                      <span class="dur-value">30</span>
+                      <span class="dur-unit">Minutos</span>
+                      <span class="dur-desc">Charla Completa</span>
+                    </label>
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 60">
+                      <input type="radio" formControlName="duration" [value]="60" class="radio-hidden">
+                      <span class="dur-value">60</span>
+                      <span class="dur-unit">Minutos</span>
+                      <span class="dur-desc">Taller / Sesión larga</span>
+                    </label>
+                  } @else {
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 60">
+                      <input type="radio" formControlName="duration" [value]="60" class="radio-hidden">
+                      <span class="dur-value">1</span>
+                      <span class="dur-unit">Hora</span>
+                      <span class="dur-desc">Taller Corto</span>
+                    </label>
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 120">
+                      <input type="radio" formControlName="duration" [value]="120" class="radio-hidden">
+                      <span class="dur-value">2</span>
+                      <span class="dur-unit">Horas</span>
+                      <span class="dur-desc">Taller Estándar</span>
+                    </label>
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 180">
+                      <input type="radio" formControlName="duration" [value]="180" class="radio-hidden">
+                      <span class="dur-value">3+</span>
+                      <span class="dur-unit">Horas</span>
+                      <span class="dur-desc">Taller Completo</span>
+                    </label>
+                  }
                 </div>
               </div>
 

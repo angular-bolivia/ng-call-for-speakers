@@ -30,6 +30,7 @@
           <option value="waitlist">En lista de espera</option>
           <option value="accepted">Aceptados</option>
           <option value="rejected">Rechazados</option>
+          <option value="archived">Archivados</option>
         </select>
       </div>
 
@@ -75,6 +76,9 @@
           <div>
             <h2>{{ selectedApplicant()?.fullName }}</h2>
             <p class="subtitle">{{ selectedApplicant()?.countryOfOrigin }} • {{ selectedApplicant()?.email }}</p>
+            <p class="subtitle" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+              Enviado el {{ getApplicantDate(selectedApplicant()) | date:'medium' }}
+            </p>
           </div>
         </div>
 
@@ -85,6 +89,7 @@
             <button class="btn-status waitlist" [class.active]="selectedApplicant()?.status === 'waitlist'" (click)="updateStatus('waitlist')">Waitlist</button>
             <button class="btn-status accepted" [class.active]="selectedApplicant()?.status === 'accepted'" (click)="updateStatus('accepted')">Aceptar</button>
             <button class="btn-status rejected" [class.active]="selectedApplicant()?.status === 'rejected'" (click)="updateStatus('rejected')">Rechazar</button>
+            <button class="btn-status archived" [class.active]="selectedApplicant()?.status === 'archived'" (click)="updateStatus('archived')">Archivar</button>
           </div>
         </div>
 

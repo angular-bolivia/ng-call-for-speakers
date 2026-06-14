@@ -1,6 +1,11 @@
 /* Speaker Form Wizard Styles */
 
 .form-page-wrapper {
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-glow: rgba(112, 40, 228, 0.15);
+  --border-focus: var(--accent);
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -68,7 +73,7 @@
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 0.75rem;
-  color: var(--primary);
+  color: #ffffff;
   letter-spacing: 1px;
 }
 
@@ -141,9 +146,9 @@
 }
 
 .step-indicator.active .step-num {
-  border-color: var(--primary);
+  border-color: var(--accent);
   color: #ffffff;
-  box-shadow: 0 0 15px var(--primary-glow);
+  box-shadow: 0 0 15px rgba(112, 40, 228, 0.4);
   background: var(--bg-tertiary);
 }
 

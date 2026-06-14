@@ -206,11 +206,6 @@ export class SpeakerFormComponent {
           this.isSubmitting.set(false);
           this.submitSuccess.set(true);
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          
-          // Redirect to success or reset after 5 seconds
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 5000);
         })
         .catch((error) => {
           console.error('Error submitting application:', error);

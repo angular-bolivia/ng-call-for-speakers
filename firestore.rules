@@ -71,7 +71,7 @@ service cloud.firestore {
       data.photoStoragePath is string &&
       data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
       data.talkDescription is string && data.talkDescription.size() >= 50 && data.talkDescription.size() <= 2000 &&
-      data.duration in [15, 30, 60] &&
+      data.duration in [15, 30, 60, 120, 180] &&
       data.type in ['talk', 'workshop'] &&
       data.level in ['beginner', 'intermediate', 'advanced'] &&
       data.acceptedTerms == true &&
@@ -91,10 +91,10 @@ service cloud.firestore {
       data.photoStoragePath is string &&
       data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
       data.talkDescription is string && data.talkDescription.size() >= 50 && data.talkDescription.size() <= 2000 &&
-      data.duration in [15, 30, 60] &&
+      data.duration in [15, 30, 60, 120, 180] &&
       data.type in ['talk', 'workshop'] &&
       data.level in ['beginner', 'intermediate', 'advanced'] &&
-      data.status in ['pending', 'reviewing', 'accepted', 'waitlist', 'rejected'] &&
+      data.status in ['pending', 'reviewing', 'accepted', 'waitlist', 'rejected', 'archived'] &&
       isValidOptionalString('adminNotes', 0, 1000);
     }
 
