@@ -1,1 +1,138 @@
-<p>admin-dashboard works!</p>
+<div class="dashboard-wrapper animate-fade-in">
+  <header class="dashboard-header">
+    <div class="logo-area">
+      <h2>Angular Bolivia</h2>
+      <span class="badge">Admin Panel</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn-logout" (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <!-- List Section -->
+    <section class="list-section card-glass">
+      <div class="filters-area">
+        <input 
+          type="text" 
+          placeholder="Buscar por nombre o título..." 
+          class="search-input"
+          [ngModel]="searchQuery()" 
+          (ngModelChange)="searchQuery.set($event)"
+        >
+        <select 
+          class="status-filter"
+          [ngModel]="filterStatus()"
+          (ngModelChange)="filterStatus.set($event)"
+        >
+          <option value="all">Todos los estados</option>
+          <option value="pending">Pendientes</option>
+          <option value="waitlist">En lista de espera</option>
+          <option value="accepted">Aceptados</option>
+          <option value="rejected">Rechazados</option>
+        </select>
+      </div>
+
+      <div class="applicants-list" *ngIf="!isLoading(); else loadingTpl">
+        <div 
+          class="applicant-item" 
+          *ngFor="let app of filteredApplicants()"
+          [class.active]="app.id === selectedApplicant()?.id"
+          (click)="selectApplicant(app)"
+        >
+          <img [src]="app.photoUrl" alt="Photo" class="item-photo">
+          <div class="item-info">
+            <h4>{{ app.fullName }}</h4>
+            <p>{{ app.talkTitle }}</p>
+          </div>
+          <span class="status-badge" [ngClass]="app.status">
+            {{ app.status | uppercase }}
+          </span>
+        </div>
+
+        <div class="empty-state" *ngIf="filteredApplicants().length === 0">
+          No se encontraron resultados.
+        </div>
+      </div>
+      <ng-template #loadingTpl>
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando datos...</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- Detail Section (Sidebar/Panel) -->
+    <section class="detail-section card-glass" *ngIf="selectedApplicant()">
+      <div class="detail-header">
+        <h3>Detalles de la Postulación</h3>
+        <button class="btn-close" (click)="closeDetails()">✕</button>
+      </div>
+
+      <div class="detail-content scrollable">
+        <div class="profile-header">
+          <img [src]="selectedApplicant()?.photoUrl" alt="Photo" class="detail-photo">
+          <div>
+            <h2>{{ selectedApplicant()?.fullName }}</h2>
+            <p class="subtitle">{{ selectedApplicant()?.countryOfOrigin }} • {{ selectedApplicant()?.email }}</p>
+          </div>
+        </div>
+
+        <div class="actions-panel">
+          <label>Cambiar Estado:</label>
+          <div class="status-buttons">
+            <button class="btn-status pending" [class.active]="selectedApplicant()?.status === 'pending'" (click)="updateStatus('pending')">Pendiente</button>
+            <button class="btn-status waitlist" [class.active]="selectedApplicant()?.status === 'waitlist'" (click)="updateStatus('waitlist')">Waitlist</button>
+            <button class="btn-status accepted" [class.active]="selectedApplicant()?.status === 'accepted'" (click)="updateStatus('accepted')">Aceptar</button>
+            <button class="btn-status rejected" [class.active]="selectedApplicant()?.status === 'rejected'" (click)="updateStatus('rejected')">Rechazar</button>
+          </div>
+        </div>
+
+        <div class="section-block">
+          <h4>Detalles de la Charla</h4>
+          <p><strong>Título:</strong> {{ selectedApplicant()?.talkTitle }}</p>
+          <p><strong>Formato:</strong> {{ selectedApplicant()?.type | uppercase }} • <strong>Nivel:</strong> {{ selectedApplicant()?.level | uppercase }} • <strong>Duración:</strong> {{ selectedApplicant()?.duration }} mins</p>
+          <p class="description-text">{{ selectedApplicant()?.talkDescription }}</p>
+        </div>
+
+        <div class="section-block">
+          <h4>Biografía</h4>
+          <p class="description-text">{{ selectedApplicant()?.bio }}</p>
+        </div>
+
+        <div class="section-block links-grid">
+          <div *ngIf="selectedApplicant()?.twitter">
+            <strong>Twitter/X:</strong> <a [href]="selectedApplicant()?.twitter" target="_blank">{{ selectedApplicant()?.twitter }}</a>
+          </div>
+          <div *ngIf="selectedApplicant()?.linkedin">
+            <strong>LinkedIn:</strong> <a [href]="selectedApplicant()?.linkedin" target="_blank">{{ selectedApplicant()?.linkedin }}</a>
+          </div>
+          <div *ngIf="selectedApplicant()?.github">
+            <strong>GitHub:</strong> <a [href]="selectedApplicant()?.github" target="_blank">{{ selectedApplicant()?.github }}</a>
+          </div>
+          <div *ngIf="selectedApplicant()?.website">
+            <strong>Website:</strong> <a [href]="selectedApplicant()?.website" target="_blank">{{ selectedApplicant()?.website }}</a>
+          </div>
+        </div>
+
+        <div class="section-block">
+          <h4>Notas Internas (Solo Admin)</h4>
+          <textarea 
+            class="notes-input" 
+            [value]="selectedApplicant()?.notes || ''" 
+            (blur)="updateNotes($event)"
+            placeholder="Escribe notas aquí... se guardarán automáticamente al salir del campo."
+          ></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty Detail State -->
+    <section class="detail-section empty-detail card-glass" *ngIf="!selectedApplicant()">
+      <div class="placeholder-content">
+        <span class="icon">👈</span>
+        <p>Selecciona un candidato de la lista para ver sus detalles</p>
+      </div>
+    </section>
+  </div>
+</div>

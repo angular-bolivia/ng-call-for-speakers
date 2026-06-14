@@ -12,8 +12,9 @@ service firebase.storage {
       allow write: if request.resource.size < 2 * 1024 * 1024
                    && request.resource.contentType.matches('image/.*');
                    
-      // Only authenticated administrators can read or delete uploaded speaker photos
-      allow read, delete: if isAdmin();
+      // Allow public read so applicants can get the download URL for their preview, but only admins can delete
+      allow read;
+      allow delete: if isAdmin();
     }
   }
 }

@@ -157,14 +157,20 @@ export class SpeakerFormComponent {
       }, 
       () => {
         // Upload success
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this.speakerForm.patchValue({
-            photoUrl: downloadURL,
-            photoStoragePath: storagePath
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            this.speakerForm.patchValue({
+              photoUrl: downloadURL,
+              photoStoragePath: storagePath
+            });
+            this.photoPreviewUrl.set(downloadURL);
+            this.uploadingPhoto.set(false);
+          })
+          .catch((error) => {
+            console.error('Error getting download URL:', error);
+            this.photoError.set('Error obteniendo la URL de la imagen. Por favor, verifica tu conexión o las reglas de seguridad.');
+            this.uploadingPhoto.set(false);
           });
-          this.photoPreviewUrl.set(downloadURL);
-          this.uploadingPhoto.set(false);
-        });
       }
     );
   }
