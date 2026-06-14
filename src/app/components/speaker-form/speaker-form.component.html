@@ -153,12 +153,12 @@
                 <label for="bio">Acerca de ti (Biografía corta)</label>
                 <textarea id="bio" formControlName="bio" rows="4" placeholder="Cuéntanos un poco sobre tu trayectoria y experiencia..."></textarea>
                 <div class="textarea-footer">
-                  <span class="char-counter" [class.limit-reached]="speakerForm.get('bio')?.value?.length > 1000">
-                    {{ speakerForm.get('bio')?.value?.length || 0 }}/1000
-                  </span>
                   @if (speakerForm.get('bio')?.touched && speakerForm.get('bio')?.invalid) {
                     <div class="error-msg">La biografía debe tener entre 30 y 1000 caracteres.</div>
                   }
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('bio')?.value?.length > 1000">
+                    {{ speakerForm.get('bio')?.value?.length || 0 }}/1000
+                  </span>
                 </div>
               </div>
 
@@ -190,12 +190,12 @@
                 <label for="talkDescription">Descripción / Resumen de lo que tratará</label>
                 <textarea id="talkDescription" formControlName="talkDescription" rows="5" placeholder="Resume los puntos clave de tu propuesta, qué aprenderán los asistentes..."></textarea>
                 <div class="textarea-footer">
-                  <span class="char-counter" [class.limit-reached]="speakerForm.get('talkDescription')?.value?.length > 2000">
-                    {{ speakerForm.get('talkDescription')?.value?.length || 0 }}/2000
-                  </span>
                   @if (speakerForm.get('talkDescription')?.touched && speakerForm.get('talkDescription')?.invalid) {
                     <div class="error-msg">La descripción debe tener entre 50 y 2000 caracteres.</div>
                   }
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('talkDescription')?.value?.length > 2000">
+                    {{ speakerForm.get('talkDescription')?.value?.length || 0 }}/2000
+                  </span>
                 </div>
               </div>
 
@@ -251,6 +251,12 @@
                       <span class="dur-desc">Taller / Sesión larga</span>
                     </label>
                   } @else {
+                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 30">
+                      <input type="radio" formControlName="duration" [value]="30" class="radio-hidden">
+                      <span class="dur-value">30</span>
+                      <span class="dur-unit">Minutos</span>
+                      <span class="dur-desc">Taller Exprés</span>
+                    </label>
                     <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 60">
                       <input type="radio" formControlName="duration" [value]="60" class="radio-hidden">
                       <span class="dur-value">1</span>
@@ -262,12 +268,6 @@
                       <span class="dur-value">2</span>
                       <span class="dur-unit">Horas</span>
                       <span class="dur-desc">Taller Estándar</span>
-                    </label>
-                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 180">
-                      <input type="radio" formControlName="duration" [value]="180" class="radio-hidden">
-                      <span class="dur-value">3+</span>
-                      <span class="dur-unit">Horas</span>
-                      <span class="dur-desc">Taller Completo</span>
                     </label>
                   }
                 </div>

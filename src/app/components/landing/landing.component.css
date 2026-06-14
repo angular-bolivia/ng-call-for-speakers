@@ -114,6 +114,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+  /* Reserving space to avoid jumping text layout */
+  min-height: 2.3em; 
 }
 
 .hero-subtitle {
@@ -435,12 +437,19 @@
     padding: 1rem;
   }
   .hero-section {
-    padding: 5rem 0 3rem 0;
+    padding: 5rem 0 6rem 0;
+    margin-bottom: 2rem;
   }
   .requirements-card {
     padding: 2rem 1.5rem;
   }
   .benefit-card {
     padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    min-height: 3.5em;
   }
 }
