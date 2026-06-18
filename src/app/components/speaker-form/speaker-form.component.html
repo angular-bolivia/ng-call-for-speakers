@@ -348,13 +348,6 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="repository">Repositorio de la charla (opcional)</label>
-                <input type="text" id="repository" formControlName="repository" placeholder="https://github.com/usuario/repo-charla">
-                @if (speakerForm.get('repository')?.touched && speakerForm.get('repository')?.invalid) {
-                  <div class="error-msg">URL de repositorio inválida.</div>
-                }
-              </div>
 
               <!-- Terms & Conditions Text Box -->
               <div class="terms-card-glass">

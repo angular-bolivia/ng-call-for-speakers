@@ -25,7 +25,6 @@ interface Applicant {
   linkedin?: string;
   github?: string;
   website?: string;
-  repository?: string;
   previousExperience?: string;
   status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived';
   notes?: string;

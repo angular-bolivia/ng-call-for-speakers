@@ -75,7 +75,8 @@
           <img [src]="selectedApplicant()?.photoUrl" alt="Photo" class="detail-photo">
           <div>
             <h2>{{ selectedApplicant()?.fullName }}</h2>
-            <p class="subtitle">{{ selectedApplicant()?.countryOfOrigin }} • {{ selectedApplicant()?.email }}</p>
+            <p class="subtitle"><strong>Origen:</strong> {{ selectedApplicant()?.countryOfOrigin }} • <strong>Residencia:</strong> {{ selectedApplicant()?.countryOfResidence }}</p>
+            <p class="subtitle"><strong>Email:</strong> {{ selectedApplicant()?.email }} • <strong>Teléfono:</strong> {{ selectedApplicant()?.phone }}</p>
             <p class="subtitle" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
               Enviado el {{ getApplicantDate(selectedApplicant()) | date:'medium' }}
             </p>
@@ -123,6 +124,7 @@
           <div *ngIf="selectedApplicant()?.website">
             <strong>Website:</strong> <a [href]="selectedApplicant()?.website" target="_blank">{{ selectedApplicant()?.website }}</a>
           </div>
+
         </div>
 
         <div class="section-block">

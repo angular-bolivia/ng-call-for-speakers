@@ -56,7 +56,6 @@ export class SpeakerFormComponent {
     linkedin: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?linkedin\\.com\\/in\\/)?[a-zA-Z0-9_-]+\\/?$')]],
     github: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?github\\.com\\/)?[a-zA-Z0-9_-]+\\/?$')]],
     website: ['', [Validators.pattern('^(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}(\\/\\S*)?$')]],
-    repository: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?(github|gitlab|bitbucket)\\.com\\/)[a-zA-Z0-9_.-]+\\/[a-zA-Z0-9_.-]+\\/?$')]],
     acceptedTerms: [false, [Validators.requiredTrue]]
   });
 
@@ -84,8 +83,7 @@ export class SpeakerFormComponent {
              this.speakerForm.get('twitter')?.valid &&
              this.speakerForm.get('linkedin')?.valid &&
              this.speakerForm.get('github')?.valid &&
-             this.speakerForm.get('website')?.valid &&
-             this.speakerForm.get('repository')?.valid ? true : false;
+             this.speakerForm.get('website')?.valid ? true : false;
     }
     return false;
   }
@@ -185,7 +183,7 @@ export class SpeakerFormComponent {
       const fields = ['talkTitle', 'talkDescription', 'duration', 'type', 'level'];
       fields.forEach(field => this.speakerForm.get(field)?.markAsTouched());
     } else if (step === 3) {
-      const fields = ['acceptedTerms', 'twitter', 'linkedin', 'github', 'website', 'repository'];
+      const fields = ['acceptedTerms', 'twitter', 'linkedin', 'github', 'website'];
       fields.forEach(field => this.speakerForm.get(field)?.markAsTouched());
     }
   }
