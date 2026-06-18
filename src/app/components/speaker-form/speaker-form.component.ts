@@ -45,7 +45,7 @@ export class SpeakerFormComponent {
 
     // Step 2: Talk Info
     talkTitle: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(150)]],
-    talkDescription: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(2000)]],
+    talkDescription: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(1000)]],
     duration: [30, [Validators.required]], // Default 30 mins
     type: ['talk', [Validators.required]], // Default 'talk'
     level: ['intermediate', [Validators.required]], // Default 'intermediate'

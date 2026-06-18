@@ -187,30 +187,7 @@
               <h2 class="step-title">2. Detalles de tu propuesta</h2>
               <p class="step-subtitle">Háblanos sobre el tema que quieres presentar a la comunidad.</p>
 
-              <!-- Talk Title -->
-              <div class="form-group">
-                <label for="talkTitle">Título de la Charla / Taller</label>
-                <input type="text" id="talkTitle" formControlName="talkTitle" placeholder="Ej: Dominando Angular Signals en producción">
-                @if (speakerForm.get('talkTitle')?.touched && speakerForm.get('talkTitle')?.invalid) {
-                  <div class="error-msg">El título debe tener entre 10 y 150 caracteres.</div>
-                }
-              </div>
-
-              <!-- Talk Description -->
-              <div class="form-group">
-                <label for="talkDescription">Descripción / Resumen de lo que tratará</label>
-                <textarea id="talkDescription" formControlName="talkDescription" rows="5" placeholder="Resume los puntos clave de tu propuesta, qué aprenderán los asistentes..."></textarea>
-                <div class="textarea-footer">
-                  @if (speakerForm.get('talkDescription')?.touched && speakerForm.get('talkDescription')?.invalid) {
-                    <div class="error-msg">La descripción debe tener entre 50 y 2000 caracteres.</div>
-                  }
-                  <span class="char-counter" [class.limit-reached]="speakerForm.get('talkDescription')?.value?.length > 2000">
-                    {{ speakerForm.get('talkDescription')?.value?.length || 0 }}/2000
-                  </span>
-                </div>
-              </div>
-
-              <!-- Format Switch & Duration Cards -->
+              <!-- Format Switch & Level Selection -->
               <div class="form-row">
                 <!-- Type Selection -->
                 <div class="form-group">
@@ -237,6 +214,30 @@
                   </select>
                 </div>
               </div>
+
+              <!-- Talk Title -->
+              <div class="form-group">
+                <label for="talkTitle">Título de la Charla / Taller</label>
+                <input type="text" id="talkTitle" formControlName="talkTitle" placeholder="Ej: Dominando Angular Signals en producción">
+                @if (speakerForm.get('talkTitle')?.touched && speakerForm.get('talkTitle')?.invalid) {
+                  <div class="error-msg">El título debe tener entre 10 y 150 caracteres.</div>
+                }
+              </div>
+
+              <!-- Talk Description -->
+              <div class="form-group">
+                <label for="talkDescription">Descripción / Resumen de lo que tratará</label>
+                <textarea id="talkDescription" formControlName="talkDescription" rows="5" placeholder="Resume los puntos clave de tu propuesta, qué aprenderán los asistentes..."></textarea>
+                <div class="textarea-footer">
+                  @if (speakerForm.get('talkDescription')?.touched && speakerForm.get('talkDescription')?.invalid) {
+                    <div class="error-msg">La descripción debe tener entre 50 y 1000 caracteres.</div>
+                  }
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('talkDescription')?.value?.length > 1000">
+                    {{ speakerForm.get('talkDescription')?.value?.length || 0 }}/1000
+                  </span>
+                </div>
+              </div>
+
 
               <!-- Modality Selection -->
               <div class="form-group">
