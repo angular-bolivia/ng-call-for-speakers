@@ -140,10 +140,10 @@
 
                 <!-- Country of Residence -->
                 <div class="form-group">
-                  <label for="countryOfResidence">País de Residencia</label>
-                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" placeholder="Ej: Bolivia">
+                  <label for="countryOfResidence">Lugar de Residencia</label>
+                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" placeholder="Ej: Cochabamba, Bolivia">
                   @if (speakerForm.get('countryOfResidence')?.touched && speakerForm.get('countryOfResidence')?.invalid) {
-                    <div class="error-msg">País de residencia es requerido.</div>
+                    <div class="error-msg">Lugar de residencia es requerido.</div>
                   }
                 </div>
               </div>
@@ -154,10 +154,21 @@
                 <textarea id="bio" formControlName="bio" rows="4" placeholder="Cuéntanos un poco sobre tu trayectoria y experiencia..."></textarea>
                 <div class="textarea-footer">
                   @if (speakerForm.get('bio')?.touched && speakerForm.get('bio')?.invalid) {
-                    <div class="error-msg">La biografía debe tener entre 30 y 1000 caracteres.</div>
+                    <div class="error-msg">La biografía debe tener entre 30 y 500 caracteres.</div>
                   }
-                  <span class="char-counter" [class.limit-reached]="speakerForm.get('bio')?.value?.length > 1000">
-                    {{ speakerForm.get('bio')?.value?.length || 0 }}/1000
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('bio')?.value?.length > 500">
+                    {{ speakerForm.get('bio')?.value?.length || 0 }}/500
+                  </span>
+                </div>
+              </div>
+
+              <!-- Previous Experience -->
+              <div class="form-group">
+                <label for="previousExperience">Experiencia previa como speaker (Opcional)</label>
+                <textarea id="previousExperience" formControlName="previousExperience" rows="3" placeholder="Menciona charlas, meetups o conferencias donde hayas participado antes..."></textarea>
+                <div class="textarea-footer">
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('previousExperience')?.value?.length > 1000">
+                    {{ speakerForm.get('previousExperience')?.value?.length || 0 }}/1000
                   </span>
                 </div>
               </div>

@@ -38,7 +38,8 @@ export class SpeakerFormComponent {
     phone: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     countryOfOrigin: ['', [Validators.required]],
     countryOfResidence: ['', [Validators.required]],
-    bio: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(1000)]],
+    bio: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
+    previousExperience: ['', [Validators.maxLength(1000)]],
     photoUrl: ['', [Validators.required]],
     photoStoragePath: ['', [Validators.required]],
 

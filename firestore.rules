@@ -66,7 +66,8 @@ service cloud.firestore {
       data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
       data.countryOfOrigin is string && data.countryOfOrigin.size() > 0 &&
       data.countryOfResidence is string && data.countryOfResidence.size() > 0 &&
-      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 1000 &&
+      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 500 &&
+      isValidOptionalString('previousExperience', 0, 1000) &&
       isValidUrl(data.photoUrl) &&
       data.photoStoragePath is string &&
       data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
@@ -87,7 +88,8 @@ service cloud.firestore {
       data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
       data.countryOfOrigin is string && data.countryOfOrigin.size() > 0 &&
       data.countryOfResidence is string && data.countryOfResidence.size() > 0 &&
-      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 1000 &&
+      data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 500 &&
+      isValidOptionalString('previousExperience', 0, 1000) &&
       isValidUrl(data.photoUrl) &&
       data.photoStoragePath is string &&
       data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
