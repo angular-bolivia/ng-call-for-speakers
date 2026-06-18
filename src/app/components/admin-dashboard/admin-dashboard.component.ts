@@ -20,11 +20,13 @@ interface Applicant {
   duration: number;
   type: string;
   level: string;
+  modality: string;
   twitter?: string;
   linkedin?: string;
   github?: string;
   website?: string;
   repository?: string;
+  previousExperience?: string;
   status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived';
   notes?: string;
   createdAt: any;
