@@ -280,6 +280,8 @@
   font-size: 0.9rem !important;
   line-height: 1.5;
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .links-grid {
