@@ -105,6 +105,11 @@
           <p class="description-text">{{ selectedApplicant()?.bio }}</p>
         </div>
 
+        <div class="section-block" *ngIf="selectedApplicant()?.previousExperience">
+          <h4>Experiencia Previa</h4>
+          <p class="description-text">{{ selectedApplicant()?.previousExperience }}</p>
+        </div>
+
         <div class="section-block links-grid">
           <div *ngIf="selectedApplicant()?.twitter">
             <strong>Twitter/X:</strong> <a [href]="selectedApplicant()?.twitter" target="_blank">{{ selectedApplicant()?.twitter }}</a>

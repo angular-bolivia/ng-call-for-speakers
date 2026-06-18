@@ -167,8 +167,8 @@
                 <label for="previousExperience">Experiencia previa como speaker (Opcional)</label>
                 <textarea id="previousExperience" formControlName="previousExperience" rows="3" placeholder="Menciona charlas, meetups o conferencias donde hayas participado antes..."></textarea>
                 <div class="textarea-footer">
-                  <span class="char-counter" [class.limit-reached]="speakerForm.get('previousExperience')?.value?.length > 1000">
-                    {{ speakerForm.get('previousExperience')?.value?.length || 0 }}/1000
+                  <span class="char-counter" [class.limit-reached]="speakerForm.get('previousExperience')?.value?.length > 500">
+                    {{ speakerForm.get('previousExperience')?.value?.length || 0 }}/500
                   </span>
                 </div>
               </div>
