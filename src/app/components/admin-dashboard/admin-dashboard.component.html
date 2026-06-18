@@ -97,7 +97,7 @@
         <div class="section-block">
           <h4>Detalles de la Charla</h4>
           <p><strong>Título:</strong> {{ selectedApplicant()?.talkTitle }}</p>
-          <p><strong>Formato:</strong> {{ selectedApplicant()?.type | uppercase }} • <strong>Nivel:</strong> {{ selectedApplicant()?.level | uppercase }} • <strong>Duración:</strong> {{ selectedApplicant()?.duration }} mins • <strong>Modalidad:</strong> {{ selectedApplicant()?.modality | uppercase }}</p>
+          <p><strong>Formato:</strong> {{ selectedApplicant()?.type | uppercase }} • <strong>Nivel:</strong> {{ selectedApplicant()?.level | uppercase }} • <strong>Duración:</strong> {{ selectedApplicant()?.duration }} mins • <strong>Modalidad:</strong> {{ selectedApplicant()?.modality ? (selectedApplicant()?.modality | uppercase) : 'N/A' }}</p>
           <p class="description-text">{{ selectedApplicant()?.talkDescription }}</p>
         </div>
 
