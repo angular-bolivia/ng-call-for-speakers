@@ -110,5 +110,15 @@ service cloud.firestore {
       allow read, delete: if isAdmin();
       allow update: if isAdmin() && isValidApplicantOnUpdate(request.resource.data);
     }
+
+    match /mail/{mailId} {
+      // Allow creation only if it's the exact confirmation email template
+      allow create: if request.resource.data.to is string
+        && request.resource.data.message is map
+        && request.resource.data.message.subject == '¡Postulación Recibida! - NG Bolivia'
+        && request.resource.data.message.html is string;
+        
+      allow read, update, delete: if isAdmin();
+    }
   }
 }

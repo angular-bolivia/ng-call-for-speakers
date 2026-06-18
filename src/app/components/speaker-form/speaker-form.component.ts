@@ -203,6 +203,25 @@ export class SpeakerFormComponent {
       // Save to Cloud Firestore
       addDoc(collection(this.firebaseService.db, 'applicants'), formData)
         .then(() => {
+          // Trigger email confirmation
+          return addDoc(collection(this.firebaseService.db, 'mail'), {
+            to: formData.email,
+            message: {
+              subject: '¡Postulación Recibida! - NG Bolivia',
+              html: `
+                <div style="font-family: sans-serif; color: #333; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                  <h2 style="color: #dd0031;">¡Hola ${formData.fullName}!</h2>
+                  <p>Hemos recibido correctamente tu postulación para la charla <strong>"${formData.talkTitle}"</strong>.</p>
+                  <p>Nuestro equipo revisará tu propuesta detenidamente y te contactaremos pronto con novedades.</p>
+                  <p>¡Gracias por querer ser parte de la comunidad NG Bolivia!</p>
+                  <br>
+                  <p>Saludos cordiales,<br><strong>El equipo de NG Bolivia</strong></p>
+                </div>
+              `
+            }
+          });
+        })
+        .then(() => {
           this.isSubmitting.set(false);
           this.submitSuccess.set(true);
           window.scrollTo({ top: 0, behavior: 'smooth' });
