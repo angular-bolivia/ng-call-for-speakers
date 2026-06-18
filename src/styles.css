@@ -138,6 +138,10 @@ input, select, textarea {
   transition: var(--transition);
 }
 
+textarea {
+  resize: none;
+}
+
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--border-focus);

@@ -59,7 +59,7 @@ service cloud.firestore {
       return data.keys().hasAll([
         'fullName', 'email', 'phone', 'countryOfOrigin', 'countryOfResidence', 
         'bio', 'photoUrl', 'photoStoragePath', 'talkTitle', 'talkDescription', 
-        'duration', 'type', 'level', 'acceptedTerms', 'status', 'createdAt'
+        'duration', 'type', 'level', 'modality', 'acceptedTerms', 'status', 'createdAt'
       ]) &&
       data.fullName is string && data.fullName.size() >= 3 && data.fullName.size() <= 100 &&
       isValidEmail(data.email) &&
@@ -74,6 +74,7 @@ service cloud.firestore {
       data.duration in [15, 30, 60, 120] &&
       data.type in ['talk', 'workshop'] &&
       data.level in ['beginner', 'intermediate', 'advanced'] &&
+      data.modality in ['presencial', 'online', 'ambos'] &&
       data.acceptedTerms == true &&
       data.status == 'pending' &&
       data.createdAt is timestamp;
@@ -94,6 +95,7 @@ service cloud.firestore {
       data.duration in [15, 30, 60, 120] &&
       data.type in ['talk', 'workshop'] &&
       data.level in ['beginner', 'intermediate', 'advanced'] &&
+      data.modality in ['presencial', 'online', 'ambos'] &&
       data.status in ['pending', 'reviewing', 'accepted', 'waitlist', 'rejected', 'archived'] &&
       isValidOptionalString('adminNotes', 0, 1000);
     }

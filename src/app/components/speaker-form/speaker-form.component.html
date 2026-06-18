@@ -46,7 +46,7 @@
           <div class="success-icon-wrapper">🎉</div>
           <h2>¡Postulación Enviada con Éxito!</h2>
           <p>Muchas gracias por postularte como speaker para Angular Bolivia. Tu propuesta ha sido recibida correctamente por el equipo organizador.</p>
-          <p class="redirect-notice">Serás redirigido a la página de inicio en unos segundos...</p>
+
           <div class="success-actions">
             <a routerLink="/" class="btn-primary-lg">Volver ahora</a>
           </div>
@@ -225,6 +225,16 @@
                     <option value="advanced">Avanzado (Complejo)</option>
                   </select>
                 </div>
+              </div>
+
+              <!-- Modality Selection -->
+              <div class="form-group">
+                <label for="modality">Modalidad</label>
+                <select id="modality" formControlName="modality">
+                  <option value="presencial">Presencial</option>
+                  <option value="online">Online</option>
+                  <option value="ambos">Ambos</option>
+                </select>
               </div>
 
               <!-- Duration Selection -->

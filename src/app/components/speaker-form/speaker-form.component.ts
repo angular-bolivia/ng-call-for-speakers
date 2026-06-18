@@ -48,6 +48,7 @@ export class SpeakerFormComponent {
     duration: [30, [Validators.required]], // Default 30 mins
     type: ['talk', [Validators.required]], // Default 'talk'
     level: ['intermediate', [Validators.required]], // Default 'intermediate'
+    modality: ['presencial', [Validators.required]], // Default 'presencial'
 
     // Step 3: Social & Confirm
     twitter: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?twitter\\.com\\/|https:\\/\\/(www\\.)?x\\.com\\/|@)?[a-zA-Z0-9_]{1,15}$')]],
