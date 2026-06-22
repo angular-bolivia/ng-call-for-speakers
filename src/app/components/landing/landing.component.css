@@ -466,6 +466,7 @@
   }
   .nav-header {
     padding: 1rem;
+    position: relative;
   }
   .hero-section {
     padding: 5rem 0 6rem 0;
