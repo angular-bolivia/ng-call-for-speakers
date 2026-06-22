@@ -511,4 +511,29 @@
 .topic-chip:nth-child(6).scroll-reveal-left { transition-delay: 0.6s; }
 .topic-chip:nth-child(7).scroll-reveal-left { transition-delay: 0.7s; }
 
+.scroll-reveal-left-desktop {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
 
+.scroll-reveal-left-desktop.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .scroll-reveal-left-desktop {
+    transform: translateY(30px);
+  }
+  .scroll-reveal-left-desktop.is-visible {
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 769px) {
+  .benefit-card:nth-child(1).scroll-reveal-left-desktop { transition-delay: 0.1s; }
+  .benefit-card:nth-child(2).scroll-reveal-left-desktop { transition-delay: 0.3s; }
+  .benefit-card:nth-child(3).scroll-reveal-left-desktop { transition-delay: 0.5s; }
+  .benefit-card:nth-child(4).scroll-reveal-left-desktop { transition-delay: 0.7s; }
+}

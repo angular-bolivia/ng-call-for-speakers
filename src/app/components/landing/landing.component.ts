@@ -43,7 +43,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
       setTimeout(() => {
-        const elements = this.elementRef.nativeElement.querySelectorAll('.scroll-reveal, .scroll-reveal-left');
+        const elements = this.elementRef.nativeElement.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-left-desktop');
         elements.forEach((el: Element) => this.observer?.observe(el));
       }, 100);
     }
