@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject } from '@angular/core';
+import { Component, signal, computed, inject, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,21 @@ export class SpeakerFormComponent {
   private fb = inject(FormBuilder);
   private firebaseService = inject(FirebaseService);
   private router = inject(Router);
+
+  constructor() {
+    if (typeof window !== 'undefined' && isDevMode()) {
+      (window as any).bypassSpeakerFormSteps = false;
+      (window as any).enableBypassForm = () => {
+        (window as any).bypassSpeakerFormSteps = true;
+        console.log('%c[Bypass Form] Activado. Ahora puedes avanzar en el formulario sin restricciones.', 'color: #7028e4; font-weight: bold; font-size: 12px;');
+      };
+      (window as any).disableBypassForm = () => {
+        (window as any).bypassSpeakerFormSteps = false;
+        console.log('%c[Bypass Form] Desactivado.', 'color: #ef4444; font-weight: bold; font-size: 12px;');
+      };
+      console.log('%c[NG-Bolivia] Escribe %cenableBypassForm()%c en la consola para saltar las validaciones del formulario.', 'color: #df208c;', 'color: #7028e4; font-weight: bold;', 'color: #df208c;');
+    }
+  }
 
   // Wizard state signals
   public currentStep = signal<number>(1);
@@ -55,12 +70,19 @@ export class SpeakerFormComponent {
     twitter: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?twitter\\.com\\/|https:\\/\\/(www\\.)?x\\.com\\/|@)?[a-zA-Z0-9_]{1,15}$')]],
     linkedin: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?linkedin\\.com\\/in\\/)?[a-zA-Z0-9_-]+\\/?$')]],
     github: ['', [Validators.pattern('^(https:\\/\\/(www\\.)?github\\.com\\/)?[a-zA-Z0-9_-]+\\/?$')]],
-    website: ['', [Validators.pattern('^(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}(\\/\\S*)?$')]],
+    website: ['', [Validators.pattern('^(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,}(\\/\\S*)?$')]],
     acceptedTerms: [false, [Validators.requiredTrue]]
   });
 
   // Check validity of fields per step
+  public isBypassActive(): boolean {
+    return typeof window !== 'undefined' && isDevMode() && !!(window as any).bypassSpeakerFormSteps;
+  }
+
   public isStepValid(step: number): boolean {
+    if (this.isBypassActive()) {
+      return true;
+    }
     if (step === 1) {
       return this.speakerForm.get('fullName')?.valid &&
              this.speakerForm.get('email')?.valid &&
@@ -190,7 +212,7 @@ export class SpeakerFormComponent {
 
   // Submit Handler
   public onSubmit(): void {
-    if (this.speakerForm.valid) {
+    if (this.speakerForm.valid || this.isBypassActive()) {
       this.isSubmitting.set(true);
       this.submitError.set(null);
 

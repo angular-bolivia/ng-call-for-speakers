@@ -141,7 +141,7 @@
                 <!-- Country of Residence -->
                 <div class="form-group">
                   <label for="countryOfResidence">Lugar de Residencia</label>
-                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" placeholder="Ej: Cochabamba, Bolivia">
+                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" placeholder="Ej: Cochabamba">
                   @if (speakerForm.get('countryOfResidence')?.touched && speakerForm.get('countryOfResidence')?.invalid) {
                     <div class="error-msg">Lugar de residencia es requerido.</div>
                   }
@@ -333,7 +333,7 @@
               <div class="form-row">
                 <div class="form-group">
                   <label for="github">GitHub</label>
-                  <input type="text" id="github" formControlName="github" placeholder="Ej: github.com/usuario">
+                  <input type="text" id="github" formControlName="github" placeholder="Ej: https://github.com/usuario">
                   @if (speakerForm.get('github')?.touched && speakerForm.get('github')?.invalid) {
                     <div class="error-msg">Perfil de GitHub inválido.</div>
                   }
@@ -377,7 +377,7 @@
               <!-- Action buttons -->
               <div class="step-actions">
                 <button type="button" class="btn-secondary" [disabled]="isSubmitting()" (click)="prevStep()">Atrás</button>
-                <button type="submit" class="btn-submit" [disabled]="!speakerForm.valid || isSubmitting()">
+                <button type="submit" class="btn-submit" [disabled]="(!speakerForm.valid && !isBypassActive()) || isSubmitting()">
                   @if (isSubmitting()) {
                     <span class="btn-spinner"></span> Enviando...
                   } @else {
