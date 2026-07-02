@@ -67,7 +67,12 @@
     <section class="detail-section card-glass" *ngIf="selectedApplicant()">
       <div class="detail-header">
         <h3>Detalles de la Postulación</h3>
-        <button class="btn-close" (click)="closeDetails()">✕</button>
+        <div class="header-buttons">
+          <button class="btn-download" (click)="downloadSpeakerData()" title="Descargar datos e imagen del speaker">
+            📥 Descargar
+          </button>
+          <button class="btn-close" (click)="closeDetails()">✕</button>
+        </div>
       </div>
 
       <div class="detail-content scrollable">

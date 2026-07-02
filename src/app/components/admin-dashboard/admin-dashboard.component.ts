@@ -105,6 +105,70 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedApplicant.set(null);
   }
 
+  public downloadSpeakerData() {
+    const applicant = this.selectedApplicant();
+    if (applicant) {
+      this.downloadSpeakerDataOf(applicant);
+    }
+  }
+
+  private downloadSpeakerDataOf(applicant: Applicant) {
+    // 1. Download JSON data
+    const { id, ...cleanData } = applicant;
+    let formattedCreatedAt = cleanData.createdAt;
+    if (cleanData.createdAt && typeof cleanData.createdAt.toDate === 'function') {
+      formattedCreatedAt = (cleanData.createdAt as any).toDate().toISOString();
+    }
+    const finalData = {
+      ...cleanData,
+      createdAt: formattedCreatedAt
+    };
+    const jsonString = JSON.stringify(finalData, null, 2);
+    const jsonBlob = new Blob([jsonString], { type: 'application/json' });
+    const jsonUrl = URL.createObjectURL(jsonBlob);
+    const jsonLink = document.createElement('a');
+    jsonLink.href = jsonUrl;
+    jsonLink.download = `${applicant.fullName.replace(/\s+/g, '_')}_data.json`;
+    jsonLink.click();
+    URL.revokeObjectURL(jsonUrl);
+
+    // 2. Download Image (handles CORS gracefully)
+    if (applicant.photoUrl) {
+      fetch(applicant.photoUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          const imgUrl = URL.createObjectURL(blob);
+          const imgLink = document.createElement('a');
+          imgLink.href = imgUrl;
+          
+          let ext = 'jpg';
+          const mimeType = blob.type;
+          if (mimeType === 'image/png') {
+            ext = 'png';
+          } else if (mimeType === 'image/webp') {
+            ext = 'webp';
+          } else {
+            const urlPath = applicant.photoUrl.split('?')[0];
+            const urlExt = urlPath.split('.').pop();
+            if (urlExt && urlExt.length <= 4) {
+              ext = urlExt;
+            }
+          }
+
+          imgLink.download = `${applicant.fullName.replace(/\s+/g, '_')}_photo.${ext}`;
+          imgLink.click();
+          URL.revokeObjectURL(imgUrl);
+        })
+        .catch(err => {
+          console.warn('CORS error when downloading image, opening in a new tab:', err);
+          const fallbackLink = document.createElement('a');
+          fallbackLink.href = applicant.photoUrl;
+          fallbackLink.target = '_blank';
+          fallbackLink.click();
+        });
+    }
+  }
+
   public async updateStatus(status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived') {
     const applicant = this.selectedApplicant();
     if (!applicant) return;
