@@ -131,42 +131,6 @@ export class AdminDashboardComponent implements OnInit {
     jsonLink.download = `${applicant.fullName.replace(/\s+/g, '_')}_data.json`;
     jsonLink.click();
     URL.revokeObjectURL(jsonUrl);
-
-    // 2. Download Image (handles CORS gracefully)
-    if (applicant.photoUrl) {
-      fetch(applicant.photoUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          const imgUrl = URL.createObjectURL(blob);
-          const imgLink = document.createElement('a');
-          imgLink.href = imgUrl;
-          
-          let ext = 'jpg';
-          const mimeType = blob.type;
-          if (mimeType === 'image/png') {
-            ext = 'png';
-          } else if (mimeType === 'image/webp') {
-            ext = 'webp';
-          } else {
-            const urlPath = applicant.photoUrl.split('?')[0];
-            const urlExt = urlPath.split('.').pop();
-            if (urlExt && urlExt.length <= 4) {
-              ext = urlExt;
-            }
-          }
-
-          imgLink.download = `${applicant.fullName.replace(/\s+/g, '_')}_photo.${ext}`;
-          imgLink.click();
-          URL.revokeObjectURL(imgUrl);
-        })
-        .catch(err => {
-          console.warn('CORS error when downloading image, opening in a new tab:', err);
-          const fallbackLink = document.createElement('a');
-          fallbackLink.href = applicant.photoUrl;
-          fallbackLink.target = '_blank';
-          fallbackLink.click();
-        });
-    }
   }
 
   public async updateStatus(status: 'pending' | 'accepted' | 'waitlist' | 'rejected' | 'archived') {
