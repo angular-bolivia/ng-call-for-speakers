@@ -433,7 +433,8 @@
 /* Duration Selectable Cards */
 .duration-cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 1rem;
   margin-top: 0.25rem;
 }
@@ -675,7 +676,7 @@
     font-size: 0.7rem;
   }
   .duration-cards-grid {
-    grid-template-columns: 1fr;
+    grid-auto-flow: row;
   }
   .photo-upload-container {
     flex-direction: column;
