@@ -194,11 +194,11 @@
                   <label>Formato de la Propuesta</label>
                   <div class="format-toggle-container">
                     <label class="toggle-option" [class.active]="speakerForm.get('type')?.value === 'talk'">
-                      <input type="radio" formControlName="type" value="talk" class="radio-hidden">
+                      <input type="radio" formControlName="type" value="talk" class="radio-hidden" (change)="speakerForm.get('duration')?.setValue(30)">
                       🎤 Charla
                     </label>
                     <label class="toggle-option" [class.active]="speakerForm.get('type')?.value === 'workshop'">
-                      <input type="radio" formControlName="type" value="workshop" class="radio-hidden">
+                      <input type="radio" formControlName="type" value="workshop" class="radio-hidden" (change)="speakerForm.get('duration')?.setValue(30)">
                       💻 Taller
                     </label>
                   </div>
@@ -265,12 +265,6 @@
                       <span class="dur-value">30</span>
                       <span class="dur-unit">Minutos</span>
                       <span class="dur-desc">Charla Completa</span>
-                    </label>
-                    <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 60">
-                      <input type="radio" formControlName="duration" [value]="60" class="radio-hidden">
-                      <span class="dur-value">60</span>
-                      <span class="dur-unit">Minutos</span>
-                      <span class="dur-desc">Taller / Sesión larga</span>
                     </label>
                   } @else {
                     <label class="duration-card" [class.active]="speakerForm.get('duration')?.value === 30">

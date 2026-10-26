@@ -17,7 +17,7 @@ rules_version = '2';
 //   - photoStoragePath: string (required) - Storage path reference
 //   - talkTitle: string (required, 10-150 chars) - Title of the proposed talk
 //   - talkDescription: string (required, 50-2000 chars) - Description of the talk
-//   - duration: number (required, must be 15, 30, or 60) - Duration in minutes
+//   - duration: number (required; talk: 15 or 30, workshop: 30, 60 or 120) - Duration in minutes
 //   - type: string (required, 'talk' | 'workshop') - Presentation type
 //   - level: string (required, 'beginner' | 'intermediate' | 'advanced') - Talk level
 //   - acceptedTerms: bool (required, must be true) - Terms agreement check
@@ -72,7 +72,7 @@ service cloud.firestore {
       data.photoStoragePath is string &&
       data.talkTitle is string && data.talkTitle.size() >= 10 && data.talkTitle.size() <= 150 &&
       data.talkDescription is string && data.talkDescription.size() >= 50 && data.talkDescription.size() <= 1000 &&
-      data.duration in [15, 30, 60, 120] &&
+      (data.type == 'talk' ? data.duration in [15, 30] : data.duration in [30, 60, 120]) &&
       data.type in ['talk', 'workshop'] &&
       data.level in ['beginner', 'intermediate', 'advanced'] &&
       data.modality in ['presencial', 'online', 'ambos'] &&
