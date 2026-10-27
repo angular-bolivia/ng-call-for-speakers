@@ -1,0 +1,36 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # environment.ts is gitignored; its full content lives in the ENVIRONMENT_TS secret
+      - run: printf '%s\n' "$ENVIRONMENT_TS" > src/environments/environment.ts
+        env:
+          ENVIRONMENT_TS: ${{ secrets.ENVIRONMENT_TS }}
+
+      - run: npm run build
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - run: npx firebase-tools@15 deploy --only hosting,firestore,storage --project ng-call-for-speakers-bo --non-interactive
