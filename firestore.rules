@@ -11,7 +11,7 @@ rules_version = '2';
 //   - email: string (required, valid email pattern) - Contact email
 //   - phone: string (required, 8-20 chars) - Phone number
 //   - countryOfOrigin: string (required) - Country of origin
-//   - countryOfResidence: string (required) - Country of residence
+//   - countryOfResidence: string (required) - "Ciudad, País" of residence
 //   - bio: string (required, 30-1000 chars) - About the speaker
 //   - photoUrl: string (required, valid URL) - Public url of profile photo
 //   - photoStoragePath: string (required) - Storage path reference
@@ -65,7 +65,7 @@ service cloud.firestore {
       isValidEmail(data.email) &&
       data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
       data.countryOfOrigin is string && data.countryOfOrigin.size() > 0 &&
-      data.countryOfResidence is string && data.countryOfResidence.size() > 0 &&
+      data.countryOfResidence is string && data.countryOfResidence.matches('.+, .+') &&
       data.bio is string && data.bio.size() >= 30 && data.bio.size() <= 500 &&
       isValidOptionalString('previousExperience', 0, 500) &&
       isValidUrl(data.photoUrl) &&

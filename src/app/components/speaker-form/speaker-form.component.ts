@@ -1,7 +1,9 @@
 import { Component, signal, computed, inject, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged, switchMap, from, of } from 'rxjs';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { FirebaseService } from '../../services/firebase.service';
@@ -31,6 +33,22 @@ export class SpeakerFormComponent {
       };
       console.log('%c[NG-Bolivia] Escribe %cenableBypassForm()%c en la consola para saltar las validaciones del formulario.', 'color: #df208c;', 'color: #7028e4; font-weight: bold;', 'color: #df208c;');
     }
+
+    const residence = this.speakerForm.get('countryOfResidence')!;
+    residence.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((value: string) => {
+        const query = (value || '').split(',')[0].trim();
+        return query.length >= 3 && !this.validCities.has(value) ? from(this.searchCities(query)) : of(null);
+      }),
+      takeUntilDestroyed()
+    ).subscribe(cities => {
+      if (!cities) return;
+      cities.forEach(city => this.validCities.add(city));
+      this.citySuggestions.set(cities);
+      residence.updateValueAndValidity({ emitEvent: false });
+    });
   }
 
   // Wizard state signals
@@ -45,6 +63,13 @@ export class SpeakerFormComponent {
   public uploadProgress = signal<number>(0);
   public photoError = signal<string | null>(null);
 
+  // City autocomplete: residence must be one of the "Ciudad, País" options returned by the geocoding API
+  public citySuggestions = signal<string[]>([]);
+  private validCities = new Set<string>();
+  // ponytail: if the geocoding API is down, fall back to a plain "Ciudad, País" format check so nobody gets blocked
+  private cityApiDown = false;
+  private countryNames = new Intl.DisplayNames(['es'], { type: 'region' });
+
   // Form Group configuration
   public speakerForm: FormGroup = this.fb.group({
     // Step 1: Personal Info
@@ -52,7 +77,7 @@ export class SpeakerFormComponent {
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     countryOfOrigin: ['', [Validators.required]],
-    countryOfResidence: ['', [Validators.required]],
+    countryOfResidence: ['', [Validators.required, (c: AbstractControl) => this.validateCity(c.value)]],
     bio: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
     previousExperience: ['', [Validators.maxLength(500)]],
     photoUrl: ['', [Validators.required]],
@@ -73,6 +98,31 @@ export class SpeakerFormComponent {
     website: ['', [Validators.pattern('^(https?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,}(\\/\\S*)?$')]],
     acceptedTerms: [false, [Validators.requiredTrue]]
   });
+
+  private validateCity(value: string) {
+    if (!value) return null; // handled by Validators.required
+    if (this.validCities.has(value)) return null;
+    if (this.cityApiDown && /^.+, .+$/.test(value)) return null;
+    return { city: true };
+  }
+
+  private async searchCities(query: string): Promise<string[]> {
+    try {
+      // Photon (OpenStreetMap), biased towards Cochabamba so Bolivian cities rank first
+      const params = new URLSearchParams({ q: query, limit: '10', lat: '-17.39', lon: '-66.16' });
+      ['place:city', 'place:town', 'place:village'].forEach(tag => params.append('osm_tag', tag));
+      const res = await fetch(`https://photon.komoot.io/api/?${params}`);
+      if (!res.ok) throw new Error(`Photon ${res.status}`);
+      const { features = [] } = await res.json();
+      this.cityApiDown = false;
+      return [...new Set<string>(features
+        .filter((f: any) => f.properties?.name && f.properties?.countrycode)
+        .map((f: any) => `${f.properties.name}, ${this.countryNames.of(f.properties.countrycode)}`))];
+    } catch {
+      this.cityApiDown = true;
+      return [];
+    }
+  }
 
   // Check validity of fields per step
   public isBypassActive(): boolean {
