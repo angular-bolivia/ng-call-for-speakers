@@ -140,10 +140,19 @@
 
                 <!-- Country of Residence -->
                 <div class="form-group">
-                  <label for="countryOfResidence">Lugar de Residencia</label>
-                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" placeholder="Ej: Cochabamba">
+                  <label for="countryOfResidence">Ciudad de Residencia</label>
+                  <input type="text" id="countryOfResidence" formControlName="countryOfResidence" list="city-options" autocomplete="off" placeholder="Ej: Cochabamba, Bolivia">
+                  <datalist id="city-options">
+                    @for (city of citySuggestions(); track city) {
+                      <option [value]="city"></option>
+                    }
+                  </datalist>
                   @if (speakerForm.get('countryOfResidence')?.touched && speakerForm.get('countryOfResidence')?.invalid) {
-                    <div class="error-msg">Lugar de residencia es requerido.</div>
+                    @if (speakerForm.get('countryOfResidence')?.hasError('required')) {
+                      <div class="error-msg">Ciudad de residencia es requerida.</div>
+                    } @else {
+                      <div class="error-msg">Escribe tu ciudad y elige una opción de la lista (Ciudad, País).</div>
+                    }
                   }
                 </div>
               </div>
